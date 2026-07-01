@@ -1,10 +1,14 @@
-import logo from "../../assets/logo/zenith-logo.png";
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, Search, ShoppingBag } from "lucide-react";
-import { navLinks } from "../../data/navbarData";
+import logo from "../../assets/logo/zenith-logo.png";
+import { useCart } from "../../context/CartContext";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  const { cartCount } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,70 +17,119 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
+  const isHome = location.pathname === "/";
+
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-black/80 backdrop-blur-xl shadow-2xl h-24"
-          : "bg-transparent h-24"
+    <nav
+      className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
+        scrolled || !isHome
+          ? "bg-black/90 backdrop-blur-xl border-b border-[#222] shadow-lg"
+          : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1450px] h-full mx-auto px-10 flex items-center justify-between">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
 
         {/* Logo */}
-        <a href="/" className="flex items-center">
-         <img
-  src={logo}
-  alt="Zenith Logo"
-  className="h-16 lg:h-20 w-auto object-contain cursor-pointer"
-/>
-        </a>
+
+        <Link to="/">
+          <img
+            src={logo}
+            alt="Zenith"
+            className="h-16 md:h-20 w-auto"
+          />
+        </Link>
 
         {/* Desktop Navigation */}
-        <ul className="hidden lg:flex items-center gap-14 uppercase text-sm tracking-[0.22em] font-medium">
 
-          {navLinks.map((item) => (
-            <li key={item.id}>
+        <div className="hidden md:flex items-center gap-10 text-sm font-medium tracking-[0.25em]">
+
+          <Link
+            to="/"
+            className="transition hover:text-[#C8A25A]"
+          >
+            HOME
+          </Link>
+
+          <Link
+            to="/shop"
+            className="transition hover:text-[#C8A25A]"
+          >
+            SHOP
+          </Link>
+
+          {isHome && (
+            <>
               <a
-                href={item.path}
-                className="relative group transition duration-300 hover:text-amber-400"
+                href="#collections"
+                className="transition hover:text-[#C8A25A]"
               >
-                {item.title}
-
-                <span className="absolute left-0 -bottom-2 h-[2px] w-0 bg-amber-400 transition-all duration-300 group-hover:w-full"></span>
-
+                COLLECTIONS
               </a>
-            </li>
-          ))}
 
-        </ul>
+              <a
+                href="#featured"
+                className="transition hover:text-[#C8A25A]"
+              >
+                FEATURED
+              </a>
+
+              <a
+                href="#about"
+                className="transition hover:text-[#C8A25A]"
+              >
+                ABOUT
+              </a>
+            </>
+          )}
+
+          <Link
+            to="/cart"
+            className="transition hover:text-[#C8A25A]"
+          >
+            CART
+          </Link>
+
+        </div>
 
         {/* Icons */}
-        <div className="hidden lg:flex items-center gap-8">
+
+        <div className="flex items-center gap-5">
 
           <Search
-            size={22}
-            className="cursor-pointer hover:text-amber-400 transition"
+            size={20}
+            className="cursor-pointer transition hover:text-[#C8A25A]"
           />
 
-          <ShoppingBag
+          <Link
+            to="/cart"
+            className="relative"
+          >
+            <ShoppingBag
+              size={20}
+              className="cursor-pointer transition hover:text-[#C8A25A]"
+            />
+
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#C8A25A] text-[10px] font-bold text-black">
+                {cartCount}
+              </span>
+            )}
+          </Link>
+
+          <Menu
             size={22}
-            className="cursor-pointer hover:text-amber-400 transition"
+            className="cursor-pointer md:hidden"
           />
 
         </div>
 
-        {/* Mobile Menu */}
-
-        <button className="lg:hidden">
-          <Menu size={32} />
-        </button>
-
       </div>
-    </header>
+    </nav>
   );
 };
 

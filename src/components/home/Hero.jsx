@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroWatch from "../../assets/images/hero-watch.png";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#050505] pt-28 pb-24">
-
+    <section
+      id="home"
+      className="relative min-h-screen overflow-hidden bg-[#050505] pt-28 pb-24"
+    >
       {/* Left Glow */}
       <div className="absolute left-[-250px] top-20 h-[600px] w-[600px] rounded-full bg-[#C8A25A]/5 blur-[220px]" />
 
@@ -61,7 +64,7 @@ const Hero = () => {
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: .2 }}
+              transition={{ delay: 0.2 }}
               className="font-serif text-6xl sm:text-7xl lg:text-[100px] leading-[0.9] font-semibold text-white"
             >
               TIME
@@ -78,7 +81,7 @@ const Hero = () => {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: .45 }}
+              transition={{ delay: 0.45 }}
               className="mt-8 max-w-xl text-lg leading-9 text-gray-300"
             >
               Discover handcrafted luxury watches where timeless Indian
@@ -91,30 +94,38 @@ const Hero = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: .65 }}
+              transition={{ delay: 0.65 }}
               className="mt-12 flex flex-wrap gap-5"
             >
 
-              <button className="group rounded-full bg-gradient-to-r from-[#B88A2A] via-[#D4AF37] to-[#F1D27A] px-9 py-4 font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(212,175,55,0.5)]">
+              <Link to="/shop">
 
-                <span className="flex items-center gap-2">
+                <button className="group rounded-full bg-gradient-to-r from-[#B88A2A] via-[#D4AF37] to-[#F1D27A] px-9 py-4 font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(212,175,55,0.5)]">
 
-                  Shop Collection
+                  <span className="flex items-center gap-2">
 
-                  <ArrowRight
-                    size={20}
-                    className="transition group-hover:translate-x-1"
-                  />
+                    Shop Collection
 
-                </span>
+                    <ArrowRight
+                      size={20}
+                      className="transition group-hover:translate-x-1"
+                    />
 
-              </button>
+                  </span>
 
-              <button className="rounded-full border border-[#C8A25A]/70 bg-white/5 px-9 py-4 font-medium backdrop-blur-sm transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#C8A25A] hover:text-black">
+                </button>
 
-                Discover Heritage
+              </Link>
 
-              </button>
+              <a href="#collections">
+
+                <button className="rounded-full border border-[#C8A25A]/70 bg-white/5 px-9 py-4 font-medium backdrop-blur-sm transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#C8A25A] hover:text-black">
+
+                  Discover Heritage
+
+                </button>
+
+              </a>
 
             </motion.div>
 
@@ -129,11 +140,7 @@ const Hero = () => {
             className="relative flex justify-center lg:justify-center"
           >
 
-            {/* Bigger Glow */}
-
             <div className="absolute h-[720px] w-[720px] rounded-full bg-[#D4AF37]/15 blur-[180px]" />
-
-            {/* Watch */}
 
             <motion.img
               src={heroWatch}
